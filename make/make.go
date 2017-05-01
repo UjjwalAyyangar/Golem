@@ -10,7 +10,7 @@ import (
 	"net"
 	"net/http"
 	"runtime"
-	//"strings"
+	"strings"
 	"time"
 )
 
@@ -31,6 +31,7 @@ func CreateBot(botToken string) (*slack.Client, *http.Client) {
 }
 func AddReaction(caller, response string) {
 	botResponse := make(map[string][]string)
+	caller = strings.ToLower(caller)
 	if _, isPresent := botResponse[caller]; isPresent {
 		log.Printf("Could not add caller %s, since it is already present \n", caller)
 	} else {
