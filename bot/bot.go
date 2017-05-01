@@ -2,6 +2,7 @@ package bot
 
 import (
 	"errors"
+	"fmt"
 	"github.com/nlopes/slack"
 	"golang.org/x/net/context"
 	"net/http"
@@ -116,7 +117,7 @@ func (bot *ChatBot) TeamJoined(event *slack.TeamJoinEvent) {
 }
 
 func (b *ChatBot) isBotMessage(event *slack.MessageEvent, eventText string) bool {
-	prefixes := []string{b.predefMessages, "gdgvit"}
+	prefixes := []string{b.predefMessages, b.name}
 	for _, p := range prefixes {
 		if strings.HasPrefix(eventText, p) {
 			return true
@@ -127,16 +128,25 @@ func (b *ChatBot) isBotMessage(event *slack.MessageEvent, eventText string) bool
 
 func (b *ChatBot) trimBot(msg string) string {
 	msg = strings.Replace(msg, strings.ToLower(b.predefMessages), "", 1)
-	msg = strings.TrimPrefix(msg, "gdgvit")
+	//fmt.Println("The message is - ", msg)
+	x := "<@" + strings.ToLower(b.id) + ">"
+	//fmt.Println("Id is ", x)
+	msg = strings.TrimPrefix(msg, x)
 	msg = strings.Trim(msg, " :\n")
+	//fmt.Println("final message", msg)
 	return msg
 
 }
 
 var botResponse map[string][]string
 
-func SetResponse(a map[string][]string) {
-	botResponse = a
+func SetResponse(a map[string][]string, caller string) {
+	if len(botResponse) == 0 {
+		botResponse = a
+	} else {
+		botResponse[caller] = a[caller]
+	}
+	fmt.Println(botResponse)
 
 }
 func addReaction(caller, response string) {
@@ -157,6 +167,8 @@ func (bot *ChatBot) HandleMessage(event *slack.MessageEvent) {
 		return
 	}
 	eventText = bot.trimBot(eventText)
+	fmt.Println(eventText, len(eventText))
+	fmt.Println(botResponse[eventText], "framework")
 
 	for _, response := range botResponse[eventText] {
 		respond(bot, event, response+"\n")

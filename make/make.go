@@ -38,7 +38,7 @@ func AddReaction(caller, response string) {
 		a = append(a, response)
 		botResponse[caller] = a //append(botResponse[caller], response)
 	}
-	bot.SetResponse(botResponse)
+	bot.SetResponse(botResponse, caller)
 }
 func Run(botName, botToken string, slackClient *slack.Client, httpClient *http.Client) {
 	botRTM := slackClient.NewRTM()
