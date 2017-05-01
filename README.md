@@ -5,7 +5,7 @@ It aims in helping go-programmers write slack bot effortlessly.
 <h3> Example :- </h3> <br/>
 
 ```
-  botToken := "SLACK-BOT-TOKEN"
+  	botToken := "SLACK-BOT-TOKEN"
 	sC, hC := make.CreateBot(botToken)
 	botName := "gdgvit"
 	make.AddReaction("Hello Bot", "What's up?")
@@ -17,7 +17,7 @@ It aims in helping go-programmers write slack bot effortlessly.
 
 <h3>Output :- </h3> <br />
 
-![alt text](https://github.com/UjjwalAyyangar/GopherOps/screenshot.png)
+![alt text](https://github.com/UjjwalAyyangar/GopherOps/blob/master/screenshot.png)
 
 
 Lot of features to be added, soon.
