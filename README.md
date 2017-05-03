@@ -1,6 +1,6 @@
 # GopherOps
 This is a chatops mico-framework made in golang. 
-It aims in helping go-programmers write slack bot effortlessly.
+It aims in helping go-programmers write slack bots effortlessly.
 
 <h3> Example :- </h3> <br/>
 
@@ -20,4 +20,4 @@ It aims in helping go-programmers write slack bot effortlessly.
 ![alt text](https://github.com/UjjwalAyyangar/GopherOps/blob/master/screenshot.png)
 
 
-Lot of features to be added, soon.
+Lots of features to be added, soon.
