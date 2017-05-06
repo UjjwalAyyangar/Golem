@@ -93,26 +93,25 @@ func (bot *ChatBot) Init(rtm *slack.RTM) error {
 	}
 	return err
 }
+var welcomeMessage string
 
-func (bot *ChatBot) TeamJoined(event *slack.TeamJoinEvent) {
-	message := ` Hello ` + event.User.Name + `,
-	You made it!
-	Welcome to the GDG VIT Vellore Slack channel.
-	The slack app is meant to be used as a medium for communication between the members of GDG VIT Vellore. These are the following channels you could join : `
-	for idx, val := range bot.channels {
-		if !val.welcome {
-			continue
-		} else {
-			message += `<` + val.id + "|" + idx + `> -> ` + val.description + "\n"
+func SetWelcome(msg string){
+	welcomeMessage = msg
+}
 
-			message += "Enjoy"
-			msgParams := slack.PostMessageParameters{AsUser: true, LinkNames: 1}
-			_, _, err := bot.client.PostMessage(event.User.ID, message, msgParams)
-			if err != nil {
-				bot.logf("%s\n", err)
-				return
-			}
-		}
+func (b * ChatBot) TeamJoined(event *slack.TeamJoinEvent){
+	var message string
+	if len(welcomeMessage)==0{
+		message= "Welcome to the team "+event.User.Name+"!"
+	}else {
+		message = welcomeMessage
+	}
+
+	msgParams := slack.PostMessageParameters{AsUser: true}
+	_,_,err := b.client.PostMessage(event.User.ID,message,msgParams)
+	if err!=nil{
+		b.logf("%s\n",err)
+		return
 	}
 }
 

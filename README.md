@@ -11,13 +11,21 @@ It aims in helping go-programmers write slack bots effortlessly.
 	make.AddReaction("Hello Bot", "What's up?")
 	make.AddReaction("Give me GDG's offical link", "https://developers.google.com/groups/")
 	make.AddReaction("Thanks", "You're welcome :) ")
-
+	make.WelcomeMessage("Welcome to our team. May the force be with you my friend")
 	make.Run(botName, botToken, sC, hC)
 ```
 
 <h3>Output :- </h3> <br />
 
-![alt text](https://github.com/UjjwalAyyangar/GopherOps/blob/master/screenshot.png)
+<h4> Sample conversation </h4> <br />
+
+![alt text](https://github.com/UjjwalAyyangar/GopherOps/blob/master/sample.png)
+
+<h4> Welcome message </h4> <br/>
+
+![alt text](https://github.com/UjjwalAyyangar/GopherOps/blob/master/welcome.png)
+
+
 
 
 Lots of features to be added, soon.

@@ -41,6 +41,10 @@ func AddReaction(caller, response string) {
 	}
 	bot.SetResponse(botResponse, caller)
 }
+func WelcomeMessage(msg string){
+	bot.SetWelcome(msg)
+}
+
 func Run(botName, botToken string, slackClient *slack.Client, httpClient *http.Client) {
 	botRTM := slackClient.NewRTM()
 	go botRTM.ManageConnection()
