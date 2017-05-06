@@ -1,4 +1,4 @@
-# GopherOps
+# Golem
 This is a chatops mico-framework made in golang. 
 It aims in helping go-programmers write slack bots effortlessly.
 
