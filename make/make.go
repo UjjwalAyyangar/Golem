@@ -1,7 +1,7 @@
 package make
 
 import (
-	"GopherOps/bot"
+	"Golem/bot"
 	//"fmt"
 	//"github.com/gorilla/mux"
 	"github.com/nlopes/slack"

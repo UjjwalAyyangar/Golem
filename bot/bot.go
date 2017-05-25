@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/nlopes/slack"
 	"golang.org/x/net/context"
+	"Golem/git"
 	"net/http"
 	//"regexp"
 	"strings"
@@ -35,7 +36,9 @@ type (
 )
 
 var cmdLog Logger
-
+const (
+	NotUnderstoodMessage = "Sorry I was not able to understand"
+)
 func (bot *ChatBot) Init(rtm *slack.RTM) error {
 	bot.logf("Determining the bot / user IDs\n")
 	users, err := bot.client.GetUsers()
@@ -156,6 +159,41 @@ func addReaction(caller, response string) {
 	}
 }
 
+func isGitRequest( eventText string) bool {
+	fields := strings.Fields(eventText)
+	if len(fields) > 3 {
+
+		if fields[3] == "git"{
+			return true
+		}
+		return false
+	}
+	return false
+}
+//create a private git repository checkbit  with description "abcedf"i
+
+func handleGitRequest(bot *ChatBot, event *slack.MessageEvent, eventText string){
+	//bot.logf("Checking for git request")
+	fields := strings.Fields(eventText)	
+	if fields[4] == "repository" {
+		repository := new (git.GitHubRepo)
+
+		
+		repository.Name = fields[5]
+		repository.Scope = fields[2]
+		if len(fields)>6 {
+			
+			repository.Description = fields[8]
+		}
+		git.CreateRepository(*repository)
+		response := "Repository successfully created"
+		bot.logf("Checkking")
+		respond(bot,event,response+"\n")
+	} else {
+		respond(bot,event,NotUnderstoodMessage+"\n") 
+	}
+}
+
 func (bot *ChatBot) HandleMessage(event *slack.MessageEvent) {
 	if event.BotID != "" || event.User == "" || event.SubType == "bot_message" {
 		return
@@ -167,13 +205,23 @@ func (bot *ChatBot) HandleMessage(event *slack.MessageEvent) {
 	}
 	eventText = bot.trimBot(eventText)
 	fmt.Println(eventText, len(eventText))
-	fmt.Println(botResponse[eventText], "framework")
-
-	for _, response := range botResponse[eventText] {
-		respond(bot, event, response+"\n")
+	
+	if isGitRequest(eventText){
+		handleGitRequest(bot,event,eventText)	
+	} else {
+		responsePresent:=0
+		for _, response := range botResponse[eventText] {
+			respond(bot, event, response+"\n")
+			responsePresent++
+		}
+		if responsePresent == 0 {
+			respond(bot,event,NotUnderstoodMessage+"\n")
+		}
 		return
 	}
+
 }
+
 func respond(bot *ChatBot, event *slack.MessageEvent, response string) {
 	msgParams := slack.PostMessageParameters{AsUser: true}
 	_, _, err := bot.client.PostMessage(event.Channel, response, msgParams)
