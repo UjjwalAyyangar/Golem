@@ -13,6 +13,7 @@ It aims in helping go-programmers write slack bots effortlessly.
 	make.AddReaction("Thanks", "You're welcome :) ")
 	make.WelcomeMessage("Welcome to our team. May the force be with you my friend")
 	make.Run(botName, botToken, sC, hC)
+
 ```
 
 <h3>Output :- </h3> <br />
