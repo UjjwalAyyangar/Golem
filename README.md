@@ -5,7 +5,9 @@ It aims in helping go-programmers write slack bots effortlessly.
 <h3> Example :- </h3> <br/>
 
 ```
-  	botToken := "SLACK-BOT-TOKEN"
+	botToken := "BOT-TOKEN"
+	gitToken := "GITHUB-TOKEN"
+	git.GitConnect(gitToken)
 	sC, hC := make.CreateBot(botToken)
 	botName := "gdgvit"
 	make.AddReaction("Hello Bot", "What's up?")
